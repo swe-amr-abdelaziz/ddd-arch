@@ -16,13 +16,17 @@
     "release": "changeset publish",
     "typecheck": "tsc",
     "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "doc:check": "pnpm -C packages/eslint-plugin-nestjs-ddd doc:check"
   },
   "devDependencies": {
     "@changesets/cli": "^2.31.0",
     "eslint": "^10.5.0",
+    "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-eslint-plugin": "^7.4.0",
     "eslint-plugin-nestjs-ddd": "workspace:*",
+    "prettier": "^3.8.5",
     "typescript": "^6.0.3"
   }
 }

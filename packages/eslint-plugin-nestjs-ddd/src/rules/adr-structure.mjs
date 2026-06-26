@@ -58,15 +58,18 @@ export default {
       titleZeroPad:
         'The title number must not be zero-padded (zero-padding belongs to the filename only).',
       titleMismatch: 'The title must match the filename slug "{{slug}}".',
-      heading: 'An ADR must start with an H1 of the form "# <number>. <Title>".',
+      heading:
+        'An ADR must start with an H1 of the form "# <number>. <Title>".',
       titleCase:
         'The ADR title must start with an uppercase letter (sentence case, not Title Case).',
       titlePeriod: 'The ADR title must not end with a period.',
-      length: 'The {{part}} section is {{count}} characters; keep it under {{max}}.',
+      length:
+        'The {{part}} section is {{count}} characters; keep it under {{max}}.',
       date: 'An ADR must carry a "Date: YYYY-MM-DD" line beneath the title.',
       dateInvalid:
         'The ADR date "{{value}}" is not a valid YYYY-MM-DD calendar date.',
-      sections: 'An ADR must contain exactly these sections, in order: {{expected}}.',
+      sections:
+        'An ADR must contain exactly these sections, in order: {{expected}}.',
       subheading:
         'An ADR has only top-level sections; sub-headings (### or deeper) are not allowed.',
       empty:
@@ -210,7 +213,8 @@ const reportDate = (context, { text, node, h1 }) => {
     context.report({
       loc: h1.position,
       messageId: 'date',
-      fix: (fixer) => fixer.replaceTextRange([end, end], `\n\nDate: ${today()}`),
+      fix: (fixer) =>
+        fixer.replaceTextRange([end, end], `\n\nDate: ${today()}`),
     });
     return;
   }
@@ -227,7 +231,9 @@ const reportDate = (context, { text, node, h1 }) => {
 const reportSubheadings = (context, { headings }) => {
   headings
     .filter((h) => h.depth >= 3)
-    .forEach((h) => context.report({ loc: h.position, messageId: 'subheading' }));
+    .forEach((h) =>
+      context.report({ loc: h.position, messageId: 'subheading' }),
+    );
 };
 
 const reportSections = (context, { h1, sectionNames }, sections) => {
@@ -266,10 +272,18 @@ const reportSectionBodies = (
       context.report({
         loc: heading.position,
         messageId: 'length',
-        data: { part: name, count: String(body.length), max: String(maxLength[name]) },
+        data: {
+          part: name,
+          count: String(body.length),
+          max: String(maxLength[name]),
+        },
       });
     }
-    if (name === 'Status' && !statuses.includes(body) && !SUPERSEDED.test(body)) {
+    if (
+      name === 'Status' &&
+      !statuses.includes(body) &&
+      !SUPERSEDED.test(body)
+    ) {
       context.report({
         loc: heading.position,
         messageId: 'status',

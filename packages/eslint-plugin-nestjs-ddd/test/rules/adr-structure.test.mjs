@@ -17,7 +17,10 @@ const config = (options) => [
   },
 ];
 
-const eslint = new ESLint({ overrideConfigFile: true, overrideConfig: config() });
+const eslint = new ESLint({
+  overrideConfigFile: true,
+  overrideConfig: config(),
+});
 const autofixer = new ESLint({
   overrideConfigFile: true,
   overrideConfig: config(),
@@ -236,7 +239,10 @@ x
   });
 
   test('a title not matching the filename slug is rejected', async () => {
-    const ids = await idsForPath(VALID, 'docs/decisions/0001-different-slug.md');
+    const ids = await idsForPath(
+      VALID,
+      'docs/decisions/0001-different-slug.md',
+    );
     assert.ok(ids.includes('titleMismatch'));
   });
 
@@ -267,6 +273,9 @@ Accepted
 
 A concise decision.
 `;
-    assert.deepEqual(await idsFor(custom, { sections: ['Status', 'Decision'] }), []);
+    assert.deepEqual(
+      await idsFor(custom, { sections: ['Status', 'Decision'] }),
+      [],
+    );
   });
 });
