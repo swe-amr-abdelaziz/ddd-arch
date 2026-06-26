@@ -6,10 +6,24 @@
   "license": "MIT",
   "author": "Amr Abdelaziz (https://github.com/swe-amr-abdelaziz)",
   "main": "src/index.mjs",
+  "types": "src/index.d.ts",
   "exports": {
-    ".": "./src/index.mjs"
+    ".": {
+      "types": "./src/index.d.ts",
+      "default": "./src/index.mjs"
+    }
+  },
+  "files": ["src"],
+  "scripts": {
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@eslint/markdown": "^8.0.2"
   },
   "peerDependencies": {
+    "eslint": "^10.5.0"
+  },
+  "devDependencies": {
     "eslint": "^10.5.0"
   }
 }

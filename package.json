@@ -13,9 +13,13 @@
   "scripts": {
     "changeset": "changeset",
     "version": "changeset version",
-    "release": "changeset publish"
+    "release": "changeset publish",
+    "typecheck": "tsc"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.31.0"
+    "@changesets/cli": "^2.31.0",
+    "eslint": "^10.5.0",
+    "eslint-plugin-nestjs-ddd": "workspace:*",
+    "typescript": "^6.0.3"
   }
 }
