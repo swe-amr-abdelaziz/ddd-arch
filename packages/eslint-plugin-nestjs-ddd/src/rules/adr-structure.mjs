@@ -5,6 +5,19 @@ export default {
   meta: {
     type: 'problem',
     fixable: 'code',
+    defaultOptions: [
+      {
+        sections: ['Status', 'Context', 'Decision', 'Consequences'],
+        statuses: ['Proposed', 'Accepted', 'Rejected', 'Deprecated'],
+        maxLength: {
+          Title: 80,
+          Status: 120,
+          Context: 600,
+          Decision: 600,
+          Consequences: 600,
+        },
+      },
+    ],
     docs: {
       description:
         'Enforce ADR structure: filename, an H1 title matching it, a valid date, the ordered sections, a status from the allowed set, no sub-headings, and per-section length limits.',
@@ -14,11 +27,24 @@ export default {
       {
         type: 'object',
         properties: {
-          sections: { type: 'array', items: { type: 'string' }, minItems: 1 },
-          statuses: { type: 'array', items: { type: 'string' }, minItems: 1 },
+          sections: {
+            type: 'array',
+            items: { type: 'string' },
+            minItems: 1,
+            description: 'The required section headings, in order.',
+          },
+          statuses: {
+            type: 'array',
+            items: { type: 'string' },
+            minItems: 1,
+            description:
+              'The accepted Status values, besides "Superseded by <link>".',
+          },
           maxLength: {
             type: 'object',
             additionalProperties: { type: 'integer', minimum: 1 },
+            description:
+              'Per-section character limits keyed by section name (plus "Title").',
           },
         },
         additionalProperties: false,
@@ -49,10 +75,7 @@ export default {
     },
   },
   create(context) {
-    const options = context.options[0] ?? {};
-    const sections = options.sections ?? SECTIONS;
-    const statuses = options.statuses ?? STATUSES;
-    const maxLength = { ...MAX_LENGTH, ...(options.maxLength ?? {}) };
+    const [{ sections, statuses, maxLength }] = context.options;
 
     return {
       root(node) {
@@ -70,16 +93,6 @@ export default {
       },
     };
   },
-};
-
-const SECTIONS = ['Status', 'Context', 'Decision', 'Consequences'];
-const STATUSES = ['Proposed', 'Accepted', 'Rejected', 'Deprecated'];
-const MAX_LENGTH = {
-  Title: 80,
-  Status: 120,
-  Context: 600,
-  Decision: 600,
-  Consequences: 600,
 };
 
 const SUPERSEDED = /^Superseded by \S/;

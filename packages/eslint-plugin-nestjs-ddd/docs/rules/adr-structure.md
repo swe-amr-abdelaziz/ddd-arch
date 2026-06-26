@@ -1,5 +1,11 @@
 # adr-structure
 
+📝 Enforce ADR structure: filename, an H1 title matching it, a valid date, the ordered sections, a status from the allowed set, no sub-headings, and per-section length limits.
+
+🔧 This rule is automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/latest/user-guide/command-line-interface#--fix).
+
+<!-- end auto-generated rule header -->
+
 Enforce the structure of Architecture Decision Records under `docs/decisions/`.
 
 An ADR must be a well-formed, concise [Nygard-style](https://cognitect.com/blog/2011/11/15/documenting-architecture-decisions) record. This rule checks **structure and length**; formatting (line length, blank lines) is left to Prettier.

@@ -14,11 +14,14 @@
     "changeset": "changeset",
     "version": "changeset version",
     "release": "changeset publish",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "lint": "eslint .",
+    "doc:check": "pnpm -C packages/eslint-plugin-nestjs-ddd doc:check"
   },
   "devDependencies": {
     "@changesets/cli": "^2.31.0",
     "eslint": "^10.5.0",
+    "eslint-plugin-eslint-plugin": "^7.4.0",
     "eslint-plugin-nestjs-ddd": "workspace:*",
     "typescript": "^6.0.3"
   }

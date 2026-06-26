@@ -13,9 +13,13 @@
       "default": "./src/index.mjs"
     }
   },
-  "files": ["src"],
+  "files": [
+    "src"
+  ],
   "scripts": {
-    "test": "node --test"
+    "test": "node --test",
+    "doc": "eslint-doc-generator",
+    "doc:check": "eslint-doc-generator --check"
   },
   "dependencies": {
     "@eslint/markdown": "^8.0.2"
@@ -24,6 +28,8 @@
     "eslint": "^10.5.0"
   },
   "devDependencies": {
-    "eslint": "^10.5.0"
+    "eslint": "^10.5.0",
+    "eslint-doc-generator": "^3.6.0",
+    "prettier": "^3.8.5"
   }
 }
