@@ -9,6 +9,18 @@ export default [
     ...eslintPlugin.configs.recommended,
   },
   {
+    files: ['packages/*/src/rules/**/*.mjs'],
+    rules: {
+      'max-lines': ['error', 200],
+      'max-lines-per-function': ['error', 30],
+      complexity: ['error', 10],
+    },
+  },
+  {
+    files: ['packages/*/src/rules/base/adr-structure.mjs'],
+    rules: { 'eslint-plugin/no-unused-message-ids': 'off' },
+  },
+  {
     files: ['**/*.mjs', '**/*.js'],
     plugins: { arch: nestjsDdd },
     rules: { 'arch/base/no-comments': 'error' },

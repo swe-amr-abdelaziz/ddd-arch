@@ -1,4 +1,4 @@
-# adr-structure
+# base/adr-structure
 
 📝 Enforce ADR structure: filename, an H1 title matching it, a valid date, the ordered sections, a status from the allowed set, no sub-headings, and per-section length limits.
 
@@ -34,7 +34,7 @@ Renamed/extra sections and sub-headings are **reported but never auto-deleted** 
 
 ```js
 {
-  "arch/adr-structure": ["error", {
+  "arch/base/adr-structure": ["error", {
     "sections": ["Status", "Context", "Decision", "Consequences"],
     "statuses": ["Proposed", "Accepted", "Rejected", "Deprecated"],
     "maxLength": { "Title": 80, "Status": 120, "Context": 600, "Decision": 600, "Consequences": 600 }

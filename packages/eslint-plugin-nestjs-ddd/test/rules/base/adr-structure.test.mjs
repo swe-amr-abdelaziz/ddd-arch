@@ -4,7 +4,7 @@ import { describe, test } from 'node:test';
 import markdown from '@eslint/markdown';
 import { ESLint } from 'eslint';
 
-import plugin from '../../src/index.mjs';
+import plugin from '../../../src/index.mjs';
 
 const config = (options) => [
   {
@@ -12,7 +12,7 @@ const config = (options) => [
     plugins: { markdown, arch: plugin },
     language: 'markdown/gfm',
     rules: {
-      'arch/adr-structure': options ? ['error', options] : 'error',
+      'arch/base/adr-structure': options ? ['error', options] : 'error',
     },
   },
 ];
@@ -73,7 +73,7 @@ Lint the four ordered sections and per-section limits over the markdown AST.
 Rationale stays terse and machine-checked; prose grammar is out of scope.
 `;
 
-describe('adr-structure', () => {
+describe('base/adr-structure', () => {
   test('a well-formed ADR is accepted', async () => {
     assert.deepEqual(await idsFor(VALID), []);
   });
