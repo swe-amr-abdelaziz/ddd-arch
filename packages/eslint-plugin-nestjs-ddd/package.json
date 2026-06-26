@@ -1,0 +1,15 @@
+{
+  "name": "eslint-plugin-nestjs-ddd",
+  "version": "0.0.0",
+  "description": "Deterministic DDD and clean-architecture ESLint rules for NestJS projects.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Amr Abdelaziz (https://github.com/swe-amr-abdelaziz)",
+  "main": "src/index.mjs",
+  "exports": {
+    ".": "./src/index.mjs"
+  },
+  "peerDependencies": {
+    "eslint": "^10.5.0"
+  }
+}

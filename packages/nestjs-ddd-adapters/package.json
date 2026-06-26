@@ -1,0 +1,11 @@
+{
+  "name": "nestjs-ddd-adapters",
+  "version": "0.0.0",
+  "description": "NestJS adapters for the DDD kernel.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Amr Abdelaziz (https://github.com/swe-amr-abdelaziz)",
+  "peerDependencies": {
+    "@nestjs/common": "^11.1.27"
+  }
+}

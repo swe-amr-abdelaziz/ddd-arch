@@ -1,0 +1,13 @@
+{
+  "name": "nestjs-ddd-conventions",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Deterministic DDD + clean/onion architecture conventions for NestJS, enforced by ESLint.",
+  "license": "MIT",
+  "author": "Amr Abdelaziz (https://github.com/swe-amr-abdelaziz)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/swe-amr-abdelaziz/nestjs-ddd-conventions.git"
+  }
+}

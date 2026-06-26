@@ -1,0 +1,8 @@
+{
+  "name": "nestjs-ddd-kernel",
+  "version": "0.0.0",
+  "description": "Framework-free DDD building blocks.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Amr Abdelaziz (https://github.com/swe-amr-abdelaziz)"
+}
