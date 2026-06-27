@@ -1,5 +1,11 @@
 # @ddd-arch/eslint-plugin
 
+## 0.1.1
+
+### Patch Changes
+
+- d1f4d97: Reposition as framework-agnostic for TypeScript backends; drop the NestJS-specific framing.
+
 ## 0.1.0
 
 ### Minor Changes
