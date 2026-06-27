@@ -1,0 +1,33 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lint
+      - run: pnpm typecheck
+      - run: pnpm -C packages/eslint-plugin test
+      - run: pnpm format:check
+      - run: pnpm doc:check
+      - run: pnpm spell
+      - run: pnpm knip
+      - run: pnpm check:parity
+      - run: pnpm check:adr-numbering
+      - run: pnpm exec changeset status --since=origin/main
+      - run: pnpm check:adr-on-feat
+        env:
+          BASE_REF: origin/main
