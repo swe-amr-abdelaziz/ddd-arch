@@ -1,5 +1,6 @@
 import eslintConfigPrettier from 'eslint-config-prettier';
 import eslintPlugin from 'eslint-plugin-eslint-plugin';
+import importX from 'eslint-plugin-import-x';
 import ddd from '@ddd-arch/eslint-plugin';
 
 export default [
@@ -19,6 +20,11 @@ export default [
   {
     files: ['packages/*/src/rules/base/adr-structure.mjs'],
     rules: { 'eslint-plugin/no-unused-message-ids': 'off' },
+  },
+  {
+    files: ['packages/*/src/**/*.mjs', 'scripts/**/*.mjs'],
+    plugins: { 'import-x': importX },
+    rules: { 'import-x/no-cycle': 'error' },
   },
   {
     files: ['**/*.mjs', '**/*.js'],

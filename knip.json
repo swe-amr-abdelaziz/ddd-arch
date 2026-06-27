@@ -1,0 +1,14 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "workspaces": {
+    ".": {
+      "entry": ["scripts/*.mjs"],
+      "project": ["scripts/**/*.mjs", "*.mjs", "*.js"]
+    },
+    "packages/eslint-plugin": {
+      "entry": ["test/**/*.test.mjs", ".eslint-doc-generatorrc.js"],
+      "project": ["src/**/*.mjs", "test/**/*.mjs"]
+    }
+  },
+  "ignoreWorkspaces": ["packages/kernel", "packages/adapters/nestjs"]
+}
