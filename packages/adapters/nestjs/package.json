@@ -1,6 +1,7 @@
 {
   "name": "@ddd-arch/nestjs",
   "version": "0.0.0",
+  "private": true,
   "description": "NestJS adapters for the DDD kernel.",
   "type": "module",
   "license": "MIT",
