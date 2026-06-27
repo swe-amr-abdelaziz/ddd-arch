@@ -1,6 +1,6 @@
 # ddd-arch
 
-Deterministic DDD + clean/onion architecture conventions for NestJS, enforced by ESLint. Opinionated by design: the rules remove architectural choices so a project's structure stays consistent — and machine-checkable — across teams and AI agents.
+Deterministic DDD + clean architecture conventions for TypeScript backends, enforced by ESLint. Framework-agnostic core. Opinionated by design: the rules remove architectural choices so a project's structure stays consistent — and machine-checkable — across teams and AI agents.
 
 ## Packages
 

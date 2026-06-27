@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "packageManager": "pnpm@11.1.2",
-  "description": "Deterministic DDD + clean/onion architecture conventions for NestJS, enforced by ESLint.",
+  "description": "Deterministic DDD + clean architecture conventions for TypeScript backends, enforced by ESLint.",
   "license": "MIT",
   "author": "Amr Abdelaziz (https://github.com/swe-amr-abdelaziz)",
   "repository": {

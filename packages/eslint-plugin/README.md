@@ -1,6 +1,6 @@
 # @ddd-arch/eslint-plugin
 
-Deterministic DDD and clean-architecture ESLint rules for NestJS projects.
+Deterministic DDD + clean architecture ESLint rules for TypeScript backends. Framework-agnostic core.
 
 ## Install
 
