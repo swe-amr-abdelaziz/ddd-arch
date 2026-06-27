@@ -1,6 +1,6 @@
 {
   "name": "@ddd-arch/eslint-plugin",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Deterministic DDD and clean-architecture ESLint rules for NestJS projects.",
   "keywords": [
     "eslint",
