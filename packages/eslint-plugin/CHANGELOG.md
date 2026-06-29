@@ -1,5 +1,11 @@
 # @ddd-arch/eslint-plugin
 
+## 0.1.2
+
+### Patch Changes
+
+- 2d28f5e: Harden two internal regular expressions against super-linear runtime on adversarial input; behaviour unchanged.
+
 ## 0.1.1
 
 ### Patch Changes
