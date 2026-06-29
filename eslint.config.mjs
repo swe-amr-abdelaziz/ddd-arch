@@ -1,6 +1,7 @@
 import eslintConfigPrettier from 'eslint-config-prettier';
 import eslintPlugin from 'eslint-plugin-eslint-plugin';
 import importX from 'eslint-plugin-import-x';
+import sonarjs from 'eslint-plugin-sonarjs';
 import ddd from '@ddd-arch/eslint-plugin';
 
 export default [
@@ -25,6 +26,10 @@ export default [
     files: ['packages/*/src/**/*.mjs', 'scripts/**/*.mjs'],
     plugins: { 'import-x': importX },
     rules: { 'import-x/no-cycle': 'error' },
+  },
+  {
+    ...sonarjs.configs.recommended,
+    files: ['packages/*/src/**/*.mjs', 'scripts/**/*.mjs'],
   },
   {
     files: ['**/*.mjs', '**/*.js'],

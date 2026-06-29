@@ -75,13 +75,14 @@ const reportTitleText = (context, { h1, title, titleStart }, fileMatch) => {
 };
 
 const reportTitlePeriod = (context, h1, title, titleStart) => {
-  const trail = TRAILING_DOTS.exec(title);
-  if (!trail) return;
+  if (!title.endsWith('.')) return;
+  let dots = 1;
+  while (title[title.length - 1 - dots] === '.') dots += 1;
   const dotsEnd = titleStart + title.length;
   context.report({
     loc: h1.position,
     messageId: 'titlePeriod',
-    fix: (fixer) => fixer.removeRange([dotsEnd - trail[0].length, dotsEnd]),
+    fix: (fixer) => fixer.removeRange([dotsEnd - dots, dotsEnd]),
   });
 };
 
@@ -99,4 +100,3 @@ const reportTitleLength = (context, { h1, h1text }, maxLength) => {
 };
 
 const TITLE = /^(\d+)\. (\S.*)$/;
-const TRAILING_DOTS = /\.+$/;
