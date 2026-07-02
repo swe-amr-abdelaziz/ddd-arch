@@ -2,10 +2,18 @@ import { execSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 
 const base = process.env.BASE_REF ?? 'origin/main';
-const pkg = JSON.parse(readFileSync('package.json', 'utf8')) as {
-  adr?: { requireOn?: string[] };
-};
-const requireOn = pkg.adr?.requireOn ?? ['feat'];
+const pkg: unknown = JSON.parse(readFileSync('package.json', 'utf8'));
+const adr =
+  typeof pkg === 'object' && pkg !== null && 'adr' in pkg ? pkg.adr : undefined;
+const requireOn =
+  typeof adr === 'object' &&
+  adr !== null &&
+  'requireOn' in adr &&
+  Array.isArray(adr.requireOn)
+    ? adr.requireOn.filter(
+        (entry): entry is string => typeof entry === 'string',
+      )
+    : ['feat'];
 
 const tryGit = (args: string): string | null => {
   try {

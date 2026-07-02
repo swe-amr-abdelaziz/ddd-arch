@@ -1,6 +1,7 @@
 import ddd from '@ddd-arch/eslint-plugin';
 import eslint from '@eslint/js';
 import json from '@eslint/json';
+import comments from '@eslint-community/eslint-plugin-eslint-comments/configs';
 import { defineConfig } from 'eslint/config';
 import eslintConfigPrettier from 'eslint-config-prettier';
 import eslintPlugin from 'eslint-plugin-eslint-plugin';
@@ -10,11 +11,16 @@ import sonarjs from 'eslint-plugin-sonarjs';
 import tseslint from 'typescript-eslint';
 import * as yamlParser from 'yaml-eslint-parser';
 
-const noDoubleAssertion = {
-  selector: "TSAsExpression[typeAnnotation.type='TSUnknownKeyword']",
-  message:
-    'Avoid "as unknown" / double type assertions; fix the underlying type instead.',
-};
+const neverInlineDisable = [
+  'arch/*',
+  '@typescript-eslint/no-unsafe-type-assertion',
+  '@typescript-eslint/no-explicit-any',
+  '@typescript-eslint/no-unsafe-argument',
+  '@typescript-eslint/no-unsafe-assignment',
+  '@typescript-eslint/no-unsafe-call',
+  '@typescript-eslint/no-unsafe-member-access',
+  '@typescript-eslint/no-unsafe-return',
+];
 
 export default [
   ...ddd.configs.adr,
@@ -34,7 +40,7 @@ export default [
       rules: {
         'simple-import-sort/imports': 'error',
         'simple-import-sort/exports': 'error',
-        'no-restricted-syntax': ['error', noDoubleAssertion],
+        '@typescript-eslint/no-unsafe-type-assertion': 'error',
       },
     },
     {
@@ -58,13 +64,29 @@ export default [
     },
     {
       files: ['packages/*/src/rules/base/adr-structure.ts'],
-      rules: { 'eslint-plugin/no-unused-message-ids': 'off' },
+      rules: {
+        'eslint-plugin/no-unused-message-ids': 'off',
+        '@typescript-eslint/no-unsafe-type-assertion': 'off',
+      },
     },
     {
       files: ['eslint.config.ts'],
       rules: { '@typescript-eslint/no-misused-spread': 'off' },
     },
   ]),
+  {
+    ...comments.recommended,
+    files: ['**/*.ts'],
+    rules: {
+      ...comments.recommended.rules,
+      '@eslint-community/eslint-comments/require-description': 'error',
+      '@eslint-community/eslint-comments/no-unused-disable': 'error',
+      '@eslint-community/eslint-comments/no-restricted-disable': [
+        'error',
+        ...neverInlineDisable,
+      ],
+    },
+  },
   {
     files: ['**/*.{ts,tsx,mts,cts,js,jsx,mjs,cjs}'],
     plugins: { arch: ddd },

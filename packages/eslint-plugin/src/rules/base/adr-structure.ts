@@ -94,20 +94,21 @@ export default createRule<[AdrOptions], AdrMessageId>({
     },
   ],
   create(context, [{ sections, statuses, maxLength }]) {
+    const hasTitle = (model: AdrModel): model is CheckedAdrModel =>
+      model.h1 !== undefined;
     return {
       root: (node: unknown) => {
         const root = node as Root;
         const model: AdrModel = analyze(context, root);
         reportFilename(context, model);
-        if (!model.h1) {
+        if (!hasTitle(model)) {
           context.report({ loc: root.position, messageId: 'heading' });
           return;
         }
-        const checked = model as CheckedAdrModel;
-        reportTitle(context, checked, maxLength);
-        reportDate(context, checked);
+        reportTitle(context, model, maxLength);
+        reportDate(context, model);
         reportSubheadings(context, model);
-        reportSections(context, checked, sections);
+        reportSections(context, model, sections);
         reportSectionBodies(context, model, sections, statuses, maxLength);
       },
     };
