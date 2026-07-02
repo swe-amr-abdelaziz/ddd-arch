@@ -33,3 +33,20 @@ jobs:
       - run: pnpm check:adr-on-feat
         env:
           BASE_REF: origin/main
+
+  compat:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        eslint: ['9', '10']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm add -w -D eslint@${{ matrix.eslint }}
+      - run: pnpm test
