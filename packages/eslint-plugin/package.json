@@ -30,7 +30,8 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
-    }
+    },
+    "./package.json": "./package.json"
   },
   "files": [
     "dist"
@@ -49,7 +50,7 @@
     "@typescript-eslint/utils": "^8.62.1"
   },
   "peerDependencies": {
-    "eslint": "^10.5.0"
+    "eslint": "^9.6.0 || ^10.0.0"
   },
   "devDependencies": {
     "@typescript-eslint/rule-tester": "^8.62.1",

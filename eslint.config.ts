@@ -66,7 +66,7 @@ export default [
     },
   ]),
   {
-    files: ['**/*.ts'],
+    files: ['**/*.{ts,tsx,mts,cts,js,jsx,mjs,cjs}'],
     plugins: { arch: ddd },
     rules: { 'arch/base/no-comments': 'error' },
   },
