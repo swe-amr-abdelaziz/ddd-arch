@@ -1,6 +1,6 @@
 {
   "name": "@ddd-arch/eslint-plugin",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Deterministic DDD + clean architecture ESLint rules for TypeScript backends.",
   "keywords": [
     "eslint",
