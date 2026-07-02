@@ -29,6 +29,7 @@ export default [
 | :----------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-- |
 | [base/adr-structure](docs/rules/base/adr-structure.md) | Enforce ADR structure: filename, an H1 title matching it, a valid date, the ordered sections, a status from the allowed set, no sub-headings, and per-section length limits. | 🔧  |
 | [base/no-comments](docs/rules/base/no-comments.md)     | Disallow comments except tool directives; rationale belongs in commit messages, ADRs, or docs.                                                                               |     |
+| [composition/root](docs/rules/composition/root.md)     | Enforce composition-root placement: only main.ts and app.module.ts at the source root, and a context module named after each context folder.                                 |     |
 
 <!-- end auto-generated rules list -->
 

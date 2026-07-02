@@ -1,4 +1,4 @@
-import architecture from '@eslint-plugin/configs/architecture';
+import ddd from '@eslint-plugin';
 import { resolveLayout } from '@eslint-plugin/configs/architecture/layout';
 import { describe, expect, it } from 'vitest';
 
@@ -58,11 +58,22 @@ describe('resolveLayout', () => {
 });
 
 describe('architecture config factory', () => {
-  it('returns a flat-config array carrying the resolved layout', () => {
-    const [config] = architecture({ topology: 'microservice' });
+  it('carries the resolved layout in settings', () => {
+    const [config] = ddd.configs.architecture({ topology: 'microservice' });
     expect(config?.settings?.ddd).toMatchObject({
       topology: 'microservice',
       sourceRoot: 'src',
     });
+  });
+
+  it('scopes the composition-root rule to the source root', () => {
+    const blocks = ddd.configs.architecture({
+      topology: 'modular-monolith',
+      sourceRoot: 'app',
+    });
+    const composition = blocks.find(
+      (block) => block.rules?.['arch/composition/root'],
+    );
+    expect(composition?.files).toEqual(['app/**/*.ts']);
   });
 });
