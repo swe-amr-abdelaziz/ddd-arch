@@ -1,5 +1,11 @@
 # @ddd-arch/eslint-plugin
 
+## 0.3.0
+
+### Minor Changes
+
+- 5a69133: Add the `configs.architecture({ topology, sourceRoot })` preset factory. It requires a `topology` (`microservice` or `modular-monolith`) and takes an optional `sourceRoot` (defaults to `src`, must be non-blank), then resolves the per-layer globs — layers at the source root for a microservice, or one level under a bounded-context folder for a modular monolith. Invalid input throws at config-load time.
+
 ## 0.2.2
 
 ### Patch Changes
