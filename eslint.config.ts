@@ -53,12 +53,18 @@ export default [
       },
     },
     {
-      files: ['packages/*/src/rules/**/*.ts'],
-      extends: [eslintPlugin.configs.recommended],
+      files: ['packages/*/src/**/*.ts'],
       rules: {
         'max-lines': ['error', 200],
         'max-lines-per-function': ['error', 30],
         complexity: ['error', 10],
+        'max-depth': ['error', 3],
+      },
+    },
+    {
+      files: ['packages/*/src/rules/**/*.ts'],
+      extends: [eslintPlugin.configs.recommended],
+      rules: {
         'eslint-plugin/require-meta-default-options': 'off',
       },
     },

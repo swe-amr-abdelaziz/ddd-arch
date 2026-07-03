@@ -1,7 +1,7 @@
 import type { TSESLint } from '@typescript-eslint/utils';
 
-import { resolveLayout } from './layout';
-import type { ArchitectureOptions } from './types';
+import { resolveLayout } from './architecture/layout';
+import type { ArchitectureOptions } from './architecture/types';
 
 export default (
   plugin: TSESLint.FlatConfig.Plugin,
