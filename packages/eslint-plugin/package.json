@@ -48,18 +48,17 @@
   },
   "dependencies": {
     "@eslint/markdown": "^8.0.2",
-    "@typescript-eslint/utils": "^8.62.1"
+    "@typescript-eslint/utils": "^8.62.1",
+    "eslint-plugin-boundaries": "^6.0.0"
   },
   "peerDependencies": {
     "eslint": "^9.6.0 || ^10.0.0",
-    "eslint-import-resolver-typescript": "^4.0.0",
-    "eslint-plugin-boundaries": "^6.0.0"
+    "eslint-import-resolver-typescript": "^4.0.0"
   },
   "devDependencies": {
     "@typescript-eslint/rule-tester": "^8.62.1",
     "eslint": "^10.5.0",
     "eslint-doc-generator": "^3.6.0",
-    "eslint-plugin-boundaries": "^6.0.2",
     "prettier": "^3.8.5",
     "tsup": "^8.5.1",
     "typescript": "^6.0.3"
