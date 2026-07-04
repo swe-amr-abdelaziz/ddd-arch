@@ -22,12 +22,12 @@ export default [
 
 The `architecture` preset enforces import direction with
 [`eslint-plugin-boundaries`](https://github.com/javierbrea/eslint-plugin-boundaries)
-and classifies TypeScript path aliases with
-[`eslint-import-resolver-typescript`](https://github.com/import-js/eslint-import-resolver-typescript).
-Install both as peers and expose a resolvable `tsconfig`:
+(bundled — no action needed) and classifies TypeScript path aliases with
+[`eslint-import-resolver-typescript`](https://github.com/import-js/eslint-import-resolver-typescript),
+which you install as a peer and point at a resolvable `tsconfig`:
 
 ```sh
-pnpm add -D eslint-plugin-boundaries eslint-import-resolver-typescript
+pnpm add -D eslint-import-resolver-typescript
 ```
 
 `eslint-import-resolver-typescript` lists `eslint-plugin-import(-x)` as an
