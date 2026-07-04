@@ -16,8 +16,23 @@ import ddd from '@ddd-arch/eslint-plugin';
 
 export default [
   ...ddd.configs.adr, // opt-in: lint docs/decisions/*.md
+  ...ddd.configs.architecture({ topology: 'modular-monolith' }), // layer + context boundaries
 ];
 ```
+
+The `architecture` preset enforces import direction with
+[`eslint-plugin-boundaries`](https://github.com/javierbrea/eslint-plugin-boundaries)
+and classifies TypeScript path aliases with
+[`eslint-import-resolver-typescript`](https://github.com/import-js/eslint-import-resolver-typescript).
+Install both as peers and expose a resolvable `tsconfig`:
+
+```sh
+pnpm add -D eslint-plugin-boundaries eslint-import-resolver-typescript
+```
+
+`eslint-import-resolver-typescript` lists `eslint-plugin-import(-x)` as an
+optional peer, so your package manager may print a peer warning if you have
+neither — resolution works without them, so the warning is safe to ignore.
 
 ## Rules
 

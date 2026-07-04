@@ -1,5 +1,6 @@
 import type { TSESLint } from '@typescript-eslint/utils';
 
+import { dependencyDirection } from './architecture/dependencies';
 import { resolveLayout } from './architecture/layout';
 import type { ArchitectureOptions } from './architecture/types';
 
@@ -24,5 +25,6 @@ export default (
         ],
       },
     },
+    dependencyDirection(layout),
   ];
 };
