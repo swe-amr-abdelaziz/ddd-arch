@@ -40,11 +40,12 @@ neither — resolution works without them, so the warning is safe to ignore.
 
 🔧 Automatically fixable by the [`--fix` CLI option](https://eslint.org/docs/user-guide/command-line-interface#--fix).
 
-| Name                                                   | Description                                                                                                                                                                  | 🔧  |
-| :----------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-- |
-| [base/adr-structure](docs/rules/base/adr-structure.md) | Enforce ADR structure: filename, an H1 title matching it, a valid date, the ordered sections, a status from the allowed set, no sub-headings, and per-section length limits. | 🔧  |
-| [base/no-comments](docs/rules/base/no-comments.md)     | Disallow comments except tool directives; rationale belongs in commit messages, ADRs, or docs.                                                                               |     |
-| [composition/root](docs/rules/composition/root.md)     | Enforce composition-root placement: only main.ts and app.module.ts at the source root, and a context module named after each context folder.                                 |     |
+| Name                                                       | Description                                                                                                                                                                  | 🔧  |
+| :--------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-- |
+| [base/adr-structure](docs/rules/base/adr-structure.md)     | Enforce ADR structure: filename, an H1 title matching it, a valid date, the ordered sections, a status from the allowed set, no sub-headings, and per-section length limits. | 🔧  |
+| [base/no-comments](docs/rules/base/no-comments.md)         | Disallow comments except tool directives; rationale belongs in commit messages, ADRs, or docs.                                                                               |     |
+| [base/no-unclassified](docs/rules/base/no-unclassified.md) | Deny every source file by default; an allowed pattern must turn this rule off, so no file escapes the architecture.                                                          |     |
+| [composition/root](docs/rules/composition/root.md)         | Enforce module placement: a context module is named after its folder and a \*.module.ts lives only at an allowed composition-root location.                                  |     |
 
 <!-- end auto-generated rules list -->
 

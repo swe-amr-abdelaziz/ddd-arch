@@ -8,6 +8,9 @@ const dependencyBlock = (options: ArchitectureOptions) =>
     .architecture(options)
     .find((block) => block.name === 'ddd/architecture/dependency-direction');
 
+const namedBlock = (options: ArchitectureOptions, name: string) =>
+  ddd.configs.architecture(options).find((block) => block.name === name);
+
 describe('resolveLayout', () => {
   it('places layers at the source root for a microservice', () => {
     expect(resolveLayout({ topology: 'microservice' }).layers).toEqual({
@@ -36,6 +39,22 @@ describe('resolveLayout', () => {
       resolveLayout({ topology: 'microservice', sourceRoot: 'app' }).layers
         .domain,
     ).toBe('app/domain/**');
+  });
+
+  it('defaults the root files to main.ts and app.module.ts', () => {
+    expect(resolveLayout({ topology: 'microservice' }).rootFiles).toEqual([
+      'main.ts',
+      'app.module.ts',
+    ]);
+  });
+
+  it('throws on rootFiles that is not an array of non-blank strings', () => {
+    expect(() =>
+      resolveLayout({ topology: 'microservice', rootFiles: ['main.ts', ' '] }),
+    ).toThrow(/rootFiles/);
+    expect(() =>
+      resolveLayout({ topology: 'microservice', rootFiles: 'main.ts' }),
+    ).toThrow(/rootFiles/);
   });
 
   it('throws on non-object options', () => {
@@ -177,5 +196,58 @@ describe('dependency-direction config', () => {
         ],
       },
     ]);
+  });
+});
+
+describe('default-deny config', () => {
+  it('denies every source file by default', () => {
+    const deny = namedBlock(
+      { topology: 'microservice' },
+      'ddd/architecture/default-deny',
+    );
+    expect(deny?.files).toEqual(['src/**/*.ts']);
+    expect(deny?.rules?.['arch/base/no-unclassified']).toBe('error');
+  });
+
+  it('allows the roots and layer files of a microservice', () => {
+    const allow = namedBlock(
+      { topology: 'microservice' },
+      'ddd/architecture/allowed-files',
+    );
+    expect(allow?.files).toEqual([
+      'src/main.ts',
+      'src/app.module.ts',
+      'src/domain/**/*.ts',
+      'src/application/**/*.ts',
+      'src/infrastructure/**/*.ts',
+      'src/presentation/**/*.ts',
+    ]);
+    expect(allow?.rules?.['arch/base/no-unclassified']).toBe('off');
+  });
+
+  it('additionally allows a per-context module in a modular monolith', () => {
+    const allow = namedBlock(
+      { topology: 'modular-monolith' },
+      'ddd/architecture/allowed-files',
+    );
+    expect(allow?.files).toEqual([
+      'src/main.ts',
+      'src/app.module.ts',
+      'src/*/*.module.ts',
+      'src/*/domain/**/*.ts',
+      'src/*/application/**/*.ts',
+      'src/*/infrastructure/**/*.ts',
+      'src/*/presentation/**/*.ts',
+    ]);
+  });
+
+  it('substitutes a custom set of root files', () => {
+    const allow = namedBlock(
+      { topology: 'microservice', rootFiles: ['index.ts', 'worker.ts'] },
+      'ddd/architecture/allowed-files',
+    );
+    expect(allow?.files).toContain('src/index.ts');
+    expect(allow?.files).toContain('src/worker.ts');
+    expect(allow?.files).not.toContain('src/main.ts');
   });
 });

@@ -2,7 +2,7 @@ import type { Topology } from '@eslint-plugin/configs/architecture/types';
 import { createRule } from '@eslint-plugin/utils/create-rule';
 
 type Options = [{ topology: Topology; sourceRoot: string }];
-type MessageId = 'rootFile' | 'moduleName' | 'moduleLocation';
+type MessageId = 'moduleName' | 'moduleLocation';
 
 interface Violation {
   messageId: MessageId;
@@ -41,11 +41,7 @@ const analyze = (
   const within = segments.slice(srcIndex + 1);
   const basename = within[within.length - 1] ?? '';
 
-  if (within.length === 1) {
-    return basename === 'main.ts' || basename === 'app.module.ts'
-      ? null
-      : { messageId: 'rootFile', data: { sourceRoot } };
-  }
+  if (within.length === 1) return null;
 
   return moduleViolation(within, basename, topology, sourceRoot);
 };
@@ -56,7 +52,7 @@ export default createRule<Options, MessageId>({
     type: 'problem',
     docs: {
       description:
-        'Enforce composition-root placement: only main.ts and app.module.ts at the source root, and a context module named after each context folder.',
+        'Enforce module placement: a context module is named after its folder and a *.module.ts lives only at an allowed composition-root location.',
     },
     schema: [
       {
@@ -77,8 +73,6 @@ export default createRule<Options, MessageId>({
       },
     ],
     messages: {
-      rootFile:
-        "Only 'main.ts' and 'app.module.ts' may sit directly under '{{sourceRoot}}'.",
       moduleName:
         "A context module must be named after its folder; expected '{{expected}}'.",
       moduleLocation:

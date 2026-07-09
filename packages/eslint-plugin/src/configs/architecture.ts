@@ -1,5 +1,6 @@
 import type { TSESLint } from '@typescript-eslint/utils';
 
+import { defaultDeny } from './architecture/default-deny';
 import { dependencyDirection } from './architecture/dependencies';
 import { resolveLayout } from './architecture/layout';
 import type { ArchitectureOptions } from './architecture/types';
@@ -26,5 +27,6 @@ export default (
       },
     },
     dependencyDirection(layout),
+    ...defaultDeny(layout, plugin),
   ];
 };

@@ -56,15 +56,14 @@ ruleTester.run('composition-root', rule, {
       code: '',
       options: [micro],
     },
-  ],
-  invalid: [
     {
-      name: 'a stray file directly under the source root',
+      name: 'a non-module file at the root is left to default-deny',
       filename: 'src/helpers.ts',
       code: '',
       options: [micro],
-      errors: [{ messageId: 'rootFile' }],
     },
+  ],
+  invalid: [
     {
       name: 'a context module not named after its folder',
       filename: 'src/billing/user.module.ts',
