@@ -10,6 +10,68 @@ Deterministic DDD + clean architecture conventions for TypeScript backends, enfo
 | `@ddd-arch/kernel`        | dependency    | framework-free DDD base classes the rules enforce           |
 | `@ddd-arch/nestjs`        | dependency    | thin NestJS runtime bridges (event publisher, error filter) |
 
+## Roadmap
+
+Each type ships as a bundle — **rule + test + doc** — and, once the taxonomy starts, a matching **generator** (`@ddd-arch/cli`) co-developed with it. `✅` shipped · `⬜` planned · `—` not applicable.
+
+### Rules & generators
+
+| Type                                                                                        | Rule | Test | Doc | Generator |
+| :------------------------------------------------------------------------------------------ | :--: | :--: | :-: | :-------: |
+| **Foundations**                                                                             |      |      |     |           |
+| `base/adr-structure`                                                                        |  ✅  |  ✅  | ✅  |    ⬜     |
+| `base/no-comments`                                                                          |  ✅  |  ✅  | ✅  |     —     |
+| `base/no-unclassified`                                                                      |  ✅  |  ✅  | ✅  |     —     |
+| `composition/root`                                                                          |  ✅  |  ✅  | ✅  |    ⬜     |
+| **Domain** — `src/<context>/domain/`                                                        |      |      |     |           |
+| value object                                                                                |  ⬜  |  ⬜  | ⬜  |    ⬜     |
+| entity                                                                                      |  ⬜  |  ⬜  | ⬜  |    ⬜     |
+| aggregate (root)                                                                            |  ⬜  |  ⬜  | ⬜  |    ⬜     |
+| domain event                                                                                |  ⬜  |  ⬜  | ⬜  |    ⬜     |
+| domain error                                                                                |  ⬜  |  ⬜  | ⬜  |    ⬜     |
+| enum                                                                                        |  ⬜  |  ⬜  | ⬜  |    ⬜     |
+| constants                                                                                   |  ⬜  |  ⬜  | ⬜  |    ⬜     |
+| specification                                                                               |  ⬜  |  ⬜  | ⬜  |    ⬜     |
+| domain service                                                                              |  ⬜  |  ⬜  | ⬜  |    ⬜     |
+| repository port                                                                             |  ⬜  |  ⬜  | ⬜  |    ⬜     |
+| **Application** — `src/<context>/application/`                                              |      |      |     |           |
+| command (+ handler)                                                                         |  ⬜  |  ⬜  | ⬜  |    ⬜     |
+| query (+ handler)                                                                           |  ⬜  |  ⬜  | ⬜  |    ⬜     |
+| DTO — command / query / result                                                              |  ⬜  |  ⬜  | ⬜  |    ⬜     |
+| policy                                                                                      |  ⬜  |  ⬜  | ⬜  |    ⬜     |
+| port                                                                                        |  ⬜  |  ⬜  | ⬜  |    ⬜     |
+| application error                                                                           |  ⬜  |  ⬜  | ⬜  |    ⬜     |
+| **Presentation** — `src/<context>/presentation/` · _driving adapters (call a use-case)_     |      |      |     |           |
+| HTTP / REST controller                                                                      |  ⬜  |  ⬜  | ⬜  |    ⬜     |
+| GraphQL resolver                                                                            |  ⬜  |  ⬜  | ⬜  |    ⬜     |
+| gRPC handler (server)                                                                       |  ⬜  |  ⬜  | ⬜  |    ⬜     |
+| CLI command                                                                                 |  ⬜  |  ⬜  | ⬜  |    ⬜     |
+| webhook receiver                                                                            |  ⬜  |  ⬜  | ⬜  |    ⬜     |
+| message / event consumer                                                                    |  ⬜  |  ⬜  | ⬜  |    ⬜     |
+| scheduled / cron trigger                                                                    |  ⬜  |  ⬜  | ⬜  |    ⬜     |
+| WebSocket / SSE gateway (inbound)                                                           |  ⬜  |  ⬜  | ⬜  |    ⬜     |
+| **Infrastructure** — `src/<context>/infrastructure/` · _driven adapters (implement a port)_ |      |      |     |           |
+| repository (persistence)                                                                    |  ⬜  |  ⬜  | ⬜  |    ⬜     |
+| cache adapter                                                                               |  ⬜  |  ⬜  | ⬜  |    ⬜     |
+| external service / API client                                                               |  ⬜  |  ⬜  | ⬜  |    ⬜     |
+| gRPC client                                                                                 |  ⬜  |  ⬜  | ⬜  |    ⬜     |
+| message / event publisher                                                                   |  ⬜  |  ⬜  | ⬜  |    ⬜     |
+| realtime push (notification port)                                                           |  ⬜  |  ⬜  | ⬜  |    ⬜     |
+| blob / file storage                                                                         |  ⬜  |  ⬜  | ⬜  |    ⬜     |
+| mail / notification sender                                                                  |  ⬜  |  ⬜  | ⬜  |    ⬜     |
+
+Each layer also gets a **barrel** and an **allowed-imports** rule; adapters carry their own DTOs and mappers. Presentation holds **driving** adapters (they call a use-case); infrastructure holds **driven** adapters (they implement a port).
+
+### Beyond the rules
+
+- [x] Architecture preset (`configs.architecture`) — topology, dependency direction, default-deny
+- [ ] Cross-context contracts — published language + integration events + consumer ACL
+- [ ] `@ddd-arch/config` — one config shared by the linter and the generator
+- [ ] `@ddd-arch/cli` (`ddd-arch g <type> <name>`) — generators co-developed per type, with a generate → lint CI check
+- [ ] `@ddd-arch/kernel` — `AggregateRoot`, `Entity`, `ValueObject`, `DomainEvent`, …
+- [ ] `@ddd-arch/nestjs` — event publisher + error filter bridges
+- [ ] Beyond TypeScript — the same standard in other languages (own organization)
+
 ## License
 
 MIT © Amr Abdelaziz
