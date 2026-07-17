@@ -1,5 +1,11 @@
 # @ddd-arch/eslint-plugin
 
+## 0.7.0
+
+### Minor Changes
+
+- c14c212: Rename from `@archward/ddd-eslint-plugin`, dropping the architecture prefix — one plugin per language with architectures as composed config (ADR-0014). The old package is deprecated and points here.
+
 ## 0.6.1
 
 ### Patch Changes
