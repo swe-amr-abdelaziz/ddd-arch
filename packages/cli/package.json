@@ -1,0 +1,39 @@
+{
+  "name": "@archward/cli",
+  "version": "0.0.0",
+  "description": "Scaffolds architecture-conformant files that pass the archward ESLint rules.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Amr Abdelaziz (https://github.com/swe-amr-abdelaziz)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/archward/ddd-typescript.git",
+    "directory": "packages/cli"
+  },
+  "homepage": "https://github.com/archward/ddd-typescript/tree/main/packages/cli#readme",
+  "bugs": "https://github.com/archward/ddd-typescript/issues",
+  "bin": {
+    "archward": "./dist/main.js"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsup",
+    "prepublishOnly": "pnpm build"
+  },
+  "dependencies": {
+    "cac": "^6.7.14"
+  },
+  "devDependencies": {
+    "@eslint/markdown": "^8.0.2",
+    "@typescript-eslint/rule-tester": "^8.62.1",
+    "eslint": "^10.5.0",
+    "tsup": "^8.5.1",
+    "typescript": "^6.0.3"
+  }
+}

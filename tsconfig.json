@@ -28,6 +28,7 @@
     "eslint.config.ts",
     "vitest.config.ts",
     "packages/eslint-plugin/tsup.config.ts",
-    "packages/eslint-plugin/.eslint-doc-generatorrc.ts"
+    "packages/eslint-plugin/.eslint-doc-generatorrc.ts",
+    "packages/cli/tsup.config.ts"
   ]
 }

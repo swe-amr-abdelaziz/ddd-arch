@@ -57,6 +57,9 @@
     "pnpm-lock.yaml",
     "dist/**",
     ".git/**",
-    "CLAUDE.md"
+    "CLAUDE.md",
+    "CONTRACTS.md",
+    "QUESTION*.md",
+    "ANSWER*.md"
   ]
 }

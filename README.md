@@ -9,17 +9,18 @@ Deterministic DDD + clean architecture conventions for TypeScript backends, enfo
 | `@archward/eslint-plugin` | devDependency | the `arch/*` rules + composed flat configs                  |
 | `@archward/kernel`        | dependency    | framework-free DDD base classes the rules enforce           |
 | `@archward/nestjs`        | dependency    | thin NestJS runtime bridges (event publisher, error filter) |
+| `@archward/cli`           | devDependency | the `archward` CLI — scaffolds conformant files (ADRs, …)   |
 
 ## Roadmap
 
-Each type ships as a bundle — **rule + test + doc** — and, once the taxonomy starts, a matching **generator** (`@archward/cli`) co-developed with it. `✅` shipped · `⬜` planned · `—` not applicable.
+Each type ships as a bundle — **rule + test + doc** — and a matching **generator** (`@archward/cli`) co-developed with it. `✅` shipped · `⬜` planned · `—` not applicable.
 
 ### Rules & generators
 
 | Type                                                                                        | Rule | Test | Doc | Generator |
 | :------------------------------------------------------------------------------------------ | :--: | :--: | :-: | :-------: |
 | **Foundations**                                                                             |      |      |     |           |
-| `base/adr-structure`                                                                        |  ✅  |  ✅  | ✅  |    ⬜     |
+| `base/adr-structure`                                                                        |  ✅  |  ✅  | ✅  |    ✅     |
 | `base/no-comments`                                                                          |  ✅  |  ✅  | ✅  |     —     |
 | `base/no-unclassified`                                                                      |  ✅  |  ✅  | ✅  |     —     |
 | `composition/root`                                                                          |  ✅  |  ✅  | ✅  |    ⬜     |
@@ -67,7 +68,7 @@ Each layer also gets a **barrel** and an **allowed-imports** rule; adapters carr
 - [x] Architecture preset (`configs.architecture`) — topology, dependency direction, default-deny
 - [ ] Cross-context contracts — published language + integration events + consumer ACL
 - [ ] `@archward/config` — one config shared by the linter and the generator
-- [ ] `@archward/cli` (`archward g <type> <name>`) — generators co-developed per type, with a generate → lint CI check
+- [x] `@archward/cli` (`archward g <type> <name>`) — ADR generator shipped with a generate → lint test; more types co-developed per taxonomy
 - [ ] `@archward/kernel` — `AggregateRoot`, `Entity`, `ValueObject`, `DomainEvent`, …
 - [ ] `@archward/nestjs` — event publisher + error filter bridges
 - [ ] Beyond TypeScript — the same standard in other languages (own organization)

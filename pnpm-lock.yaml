@@ -93,6 +93,28 @@ importers:
         specifier: ^11.1.27
         version: 11.1.27(reflect-metadata@0.2.2)(rxjs@7.8.2)
 
+  packages/cli:
+    dependencies:
+      cac:
+        specifier: ^6.7.14
+        version: 6.7.14
+    devDependencies:
+      '@eslint/markdown':
+        specifier: ^8.0.2
+        version: 8.0.2
+      '@typescript-eslint/rule-tester':
+        specifier: ^8.62.1
+        version: 8.62.1(eslint@10.5.0(jiti@2.7.0))(typescript@6.0.3)
+      eslint:
+        specifier: ^10.5.0
+        version: 10.5.0(jiti@2.7.0)
+      tsup:
+        specifier: ^8.5.1
+        version: 8.5.1(jiti@2.7.0)(postcss@8.5.16)(tsx@4.22.4)(typescript@6.0.3)(yaml@2.9.0)
+      typescript:
+        specifier: ^6.0.3
+        version: 6.0.3
+
   packages/eslint-plugin:
     dependencies:
       '@eslint/markdown':
