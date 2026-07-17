@@ -8,6 +8,10 @@
     "packages/eslint-plugin": {
       "entry": ["test/**/*.test.ts", ".eslint-doc-generatorrc.ts"],
       "project": ["src/**/*.ts", "test/**/*.ts"]
+    },
+    "packages/cli": {
+      "entry": ["test/**/*.test.ts"],
+      "project": ["src/**/*.ts", "test/**/*.ts"]
     }
   },
   "ignoreWorkspaces": ["packages/kernel", "packages/adapters/nestjs"]
