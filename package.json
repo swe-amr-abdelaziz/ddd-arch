@@ -28,7 +28,8 @@
     "dup": "jscpd packages scripts",
     "check:parity": "tsx scripts/check-parity.ts",
     "check:adr-numbering": "tsx scripts/check-adr-numbering.ts",
-    "check:adr-on-feat": "tsx scripts/check-adr-on-feat.ts"
+    "check:adr-on-feat": "tsx scripts/check-adr-on-feat.ts",
+    "check:published": "tsx scripts/check-published.ts"
   },
   "adr": {
     "requireOn": [
