@@ -1,6 +1,6 @@
 {
   "name": "@archward/config",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "One shared config for the archward linter and generator (ADR spec: sections, statuses, lengths, directory).",
   "keywords": [
     "archward",
