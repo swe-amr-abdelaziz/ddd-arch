@@ -5,6 +5,10 @@
       "entry": ["scripts/*.ts"],
       "project": ["scripts/**/*.ts", "*.ts"]
     },
+    "packages/config": {
+      "entry": ["test/**/*.test.ts"],
+      "project": ["src/**/*.ts", "test/**/*.ts"]
+    },
     "packages/eslint-plugin": {
       "entry": ["test/**/*.test.ts", ".eslint-doc-generatorrc.ts"],
       "project": ["src/**/*.ts", "test/**/*.ts"]

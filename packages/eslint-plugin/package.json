@@ -47,6 +47,7 @@
     "doc:check": "eslint-doc-generator --check"
   },
   "dependencies": {
+    "@archward/config": "workspace:*",
     "@eslint/markdown": "^8.0.2",
     "@typescript-eslint/utils": "^8.62.1",
     "eslint-plugin-boundaries": "^6.0.0"

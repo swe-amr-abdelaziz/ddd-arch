@@ -1,8 +1,8 @@
+import { defaults } from '@archward/config';
 import { describe, expect, it } from 'vitest';
 
 import { AdrDocument } from '../src/domain/adr-document';
 import { AdrNumber } from '../src/domain/adr-number';
-import { ADR_SECTIONS } from '../src/domain/adr-spec';
 import { AdrTitle } from '../src/domain/adr-title';
 
 const build = (title: string, status = 'Proposed') =>
@@ -11,7 +11,7 @@ const build = (title: string, status = 'Proposed') =>
     title: AdrTitle.from(title),
     date: '2026-07-11',
     status,
-    sections: ADR_SECTIONS,
+    sections: defaults.adr.sections,
   });
 
 describe('AdrDocument', () => {

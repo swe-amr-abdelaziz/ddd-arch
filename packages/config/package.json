@@ -1,0 +1,49 @@
+{
+  "name": "@archward/config",
+  "version": "0.1.0",
+  "description": "One shared config for the archward linter and generator (ADR spec: sections, statuses, lengths, directory).",
+  "keywords": [
+    "archward",
+    "config",
+    "adr",
+    "architecture"
+  ],
+  "type": "module",
+  "license": "MIT",
+  "author": "Amr Abdelaziz (https://github.com/swe-amr-abdelaziz)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/archward/typescript.git",
+    "directory": "packages/config"
+  },
+  "homepage": "https://github.com/archward/typescript/tree/main/packages/config#readme",
+  "bugs": "https://github.com/archward/typescript/issues",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsup",
+    "prepublishOnly": "pnpm build"
+  },
+  "dependencies": {
+    "jiti": "^2.4.2"
+  },
+  "devDependencies": {
+    "tsup": "^8.5.1",
+    "typescript": "^6.0.3"
+  }
+}

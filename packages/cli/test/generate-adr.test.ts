@@ -1,7 +1,7 @@
+import { defaults } from '@archward/config';
 import { describe, expect, it } from 'vitest';
 
 import { GenerateAdr } from '../src/application/generate-adr';
-import { ADR_SECTIONS } from '../src/domain/adr-spec';
 import type { AdrStore, StoredAdr } from '../src/domain/adr-store';
 import { InvalidInput } from '../src/domain/errors';
 
@@ -26,7 +26,7 @@ const run = (title: string, numbers: number[] = []) => {
     title,
     date: '2026-07-11',
     status: 'Proposed',
-    sections: ADR_SECTIONS,
+    sections: defaults.adr.sections,
   });
   return { store, result };
 };

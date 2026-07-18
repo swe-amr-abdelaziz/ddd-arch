@@ -1,3 +1,4 @@
+import { defaults } from '@archward/config';
 import { createRule } from '@eslint-plugin/utils/create-rule';
 import type { Root } from '@eslint-plugin/utils/mdast';
 
@@ -82,15 +83,9 @@ export default createRule<[AdrOptions], AdrMessageId>({
   },
   defaultOptions: [
     {
-      sections: ['Status', 'Context', 'Decision', 'Consequences'],
-      statuses: ['Proposed', 'Accepted', 'Rejected', 'Deprecated'],
-      maxLength: {
-        Title: 80,
-        Status: 120,
-        Context: 600,
-        Decision: 600,
-        Consequences: 600,
-      },
+      sections: defaults.adr.sections,
+      statuses: defaults.adr.statuses,
+      maxLength: defaults.adr.maxLength,
     },
   ],
   create(context, [{ sections, statuses, maxLength }]) {

@@ -7,6 +7,7 @@ Deterministic DDD + clean architecture conventions for TypeScript backends, enfo
 | Package                   | Kind          | Purpose                                                     |
 | ------------------------- | ------------- | ----------------------------------------------------------- |
 | `@archward/eslint-plugin` | devDependency | the `arch/*` rules + composed flat configs                  |
+| `@archward/config`        | devDependency | one shared config read by the linter and the CLI            |
 | `@archward/kernel`        | dependency    | framework-free DDD base classes the rules enforce           |
 | `@archward/nestjs`        | dependency    | thin NestJS runtime bridges (event publisher, error filter) |
 | `@archward/cli`           | devDependency | the `archward` CLI — scaffolds conformant files (ADRs, …)   |
@@ -67,7 +68,7 @@ Each layer also gets a **barrel** and an **allowed-imports** rule; adapters carr
 
 - [x] Architecture preset (`configs.architecture`) — topology, dependency direction, default-deny
 - [ ] Cross-context contracts — published language + integration events + consumer ACL
-- [ ] `@archward/config` — one config shared by the linter and the generator
+- [x] `@archward/config` — one config shared by the linter and the generator
 - [x] `@archward/cli` (`archward <element> <name>`, e.g. `archward adr "<title>"`) — ADR generator shipped with a generate → lint test; more elements co-developed per taxonomy
 - [ ] `@archward/kernel` — `AggregateRoot`, `Entity`, `ValueObject`, `DomainEvent`, …
 - [ ] `@archward/nestjs` — event publisher + error filter bridges

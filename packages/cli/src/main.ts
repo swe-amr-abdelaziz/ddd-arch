@@ -1,7 +1,7 @@
 import { readPackageVersion } from './infrastructure/package-version';
 import { run } from './presentation/cli';
 
-process.exitCode = run(process.argv, {
+process.exitCode = await run(process.argv, {
   cwd: process.cwd(),
   version: readPackageVersion(new URL('../package.json', import.meta.url)),
   out: (line) => {

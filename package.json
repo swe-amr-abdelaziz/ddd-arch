@@ -16,7 +16,7 @@
     "version": "changeset version",
     "release": "changeset publish",
     "prepare": "husky",
-    "build": "pnpm -C packages/eslint-plugin build",
+    "build": "pnpm -C packages/config build && pnpm -C packages/eslint-plugin build",
     "typecheck": "tsc",
     "lint": "eslint .",
     "format": "prettier --write .",
