@@ -8,11 +8,17 @@ import { type AdrCommandOptions, runAdrCommand } from './adr-command';
 
 export interface RunDeps {
   cwd: string;
+  version: string;
   out: (line: string) => void;
   err: (line: string) => void;
 }
 
 export function run(argv: string[], deps: RunDeps): number {
+  const flags = argv.slice(2);
+  if (flags.includes('-v') || flags.includes('--version')) {
+    deps.out(deps.version);
+    return 0;
+  }
   try {
     buildCli(deps).parse(argv);
     return 0;
@@ -40,6 +46,7 @@ function buildCli(deps: RunDeps): CAC {
       runAdrCommand({ type, title, options, generate, out: deps.out });
     });
   cli.help();
+  cli.version(deps.version);
   return cli;
 }
 

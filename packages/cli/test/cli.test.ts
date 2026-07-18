@@ -8,11 +8,12 @@ import { run } from '../src/presentation/cli';
 
 const scratch = () => mkdtempSync(join(tmpdir(), 'archward-cli-'));
 
-const invoke = (args: string[], cwd: string) => {
+const invoke = (args: string[], cwd: string, version = '1.2.3') => {
   const out: string[] = [];
   const err: string[] = [];
   const code = run(['node', 'archward', ...args], {
     cwd,
+    version,
     out: (line) => out.push(line),
     err: (line) => err.push(line),
   });
@@ -45,5 +46,13 @@ describe('archward g adr', () => {
     const { err, code } = invoke(['g', 'widget', 'anything'], scratch());
     expect(code).toBe(1);
     expect(err[0]).toContain('Unknown generator');
+  });
+});
+
+describe('archward --version', () => {
+  it.each([['--version'], ['-v']])('prints the bare version for %s', (flag) => {
+    const { out, code } = invoke([flag], scratch(), '1.2.3');
+    expect(code).toBe(0);
+    expect(out).toEqual(['1.2.3']);
   });
 });
