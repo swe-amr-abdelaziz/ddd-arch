@@ -37,17 +37,16 @@ export function run(argv: string[], deps: RunDeps): number {
   }
   try {
     const cli = buildCli(deps);
+    if (flags.length === 0) {
+      cli.outputHelp();
+      return 0;
+    }
     cli.parse(argv);
     if (cli.options.help) {
       return 0;
     }
     if (!cli.matchedCommand) {
-      const [command] = cli.args;
-      if (command === undefined) {
-        cli.outputHelp();
-        return 0;
-      }
-      deps.err(`archward: unknown command '${command}'`);
+      deps.err(`archward: ${unknownInput(cli.args, flags)}`);
       return 1;
     }
     return 0;
@@ -58,6 +57,18 @@ export function run(argv: string[], deps: RunDeps): number {
     deps.err(`archward: ${error.message}`);
     return 1;
   }
+}
+
+function unknownInput(
+  args: readonly (string | number)[],
+  flags: string[],
+): string {
+  const [command] = args;
+  if (command !== undefined) {
+    return `unknown command '${String(command)}'`;
+  }
+  const flag = flags.find((token) => token.startsWith('-')) ?? flags[0] ?? '';
+  return `unknown option '${flag}'`;
 }
 
 function buildCli(deps: RunDeps): CAC {

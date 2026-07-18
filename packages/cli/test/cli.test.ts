@@ -73,6 +73,15 @@ describe('archward help', () => {
     expect(code).toBe(1);
     expect(err[0]).toContain("unknown command 'widget'");
   });
+
+  it.each([['--bogus'], ['-x']])(
+    'errors instead of printing help for the unknown flag %s',
+    (flag) => {
+      const { err, code } = invoke([flag], scratch());
+      expect(code).toBe(1);
+      expect(err[0]).toContain(`unknown option '${flag}'`);
+    },
+  );
 });
 
 describe('archward --version', () => {
