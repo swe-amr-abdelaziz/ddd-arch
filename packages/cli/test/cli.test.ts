@@ -82,6 +82,21 @@ describe('archward help', () => {
       expect(err[0]).toContain(`unknown option '${flag}'`);
     },
   );
+
+  it.each([['-help'], ['-hello'], ['-ver'], ['-vr'], ['-vv']])(
+    'does not treat the near-miss flag %s as -h/--help or -v/--version',
+    (flag) => {
+      const logs: string[] = [];
+      const spy = vi
+        .spyOn(console, 'log')
+        .mockImplementation((line: string) => logs.push(line));
+      const { out, err, code } = invoke([flag], scratch());
+      spy.mockRestore();
+      expect(code).toBe(1);
+      expect(err[0]).toContain(`unknown option '${flag}'`);
+      expect([...out, ...logs]).toHaveLength(0);
+    },
+  );
 });
 
 describe('archward --version', () => {

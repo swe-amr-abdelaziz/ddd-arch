@@ -35,18 +35,18 @@ export function run(argv: string[], deps: RunDeps): number {
     deps.out(deps.version);
     return 0;
   }
+  const cli = buildCli(deps);
+  const commands = new Set(cli.commands.map((command) => command.name));
+  if (!flags.some((token) => commands.has(token))) {
+    return runGlobal(flags, cli, deps);
+  }
   try {
-    const cli = buildCli(deps);
-    if (flags.length === 0) {
-      cli.outputHelp();
-      return 0;
-    }
     cli.parse(argv);
     if (cli.options.help) {
       return 0;
     }
     if (!cli.matchedCommand) {
-      deps.err(`archward: ${unknownInput(cli.args, flags)}`);
+      deps.err(`archward: ${unknownInput(flags)}`);
       return 1;
     }
     return 0;
@@ -59,13 +59,23 @@ export function run(argv: string[], deps: RunDeps): number {
   }
 }
 
-function unknownInput(
-  args: readonly (string | number)[],
-  flags: string[],
-): string {
-  const [command] = args;
-  if (command !== undefined) {
-    return `unknown command '${String(command)}'`;
+function runGlobal(flags: string[], cli: CAC, deps: RunDeps): number {
+  const [only] = flags;
+  if (flags.length === 0 || (flags.length === 1 && isHelpFlag(only))) {
+    cli.outputHelp();
+    return 0;
+  }
+  deps.err(`archward: ${unknownInput(flags)}`);
+  return 1;
+}
+
+const isHelpFlag = (token: string | undefined): boolean =>
+  token === '-h' || token === '--help';
+
+function unknownInput(flags: string[]): string {
+  const positional = flags.find((token) => !token.startsWith('-'));
+  if (positional !== undefined) {
+    return `unknown command '${positional}'`;
   }
   const flag = flags.find((token) => token.startsWith('-')) ?? flags[0] ?? '';
   return `unknown option '${flag}'`;
