@@ -68,7 +68,7 @@ Each layer also gets a **barrel** and an **allowed-imports** rule; adapters carr
 - [x] Architecture preset (`configs.architecture`) — topology, dependency direction, default-deny
 - [ ] Cross-context contracts — published language + integration events + consumer ACL
 - [ ] `@archward/config` — one config shared by the linter and the generator
-- [x] `@archward/cli` (`archward g <type> <name>`) — ADR generator shipped with a generate → lint test; more types co-developed per taxonomy
+- [x] `@archward/cli` (`archward <element> <name>`, e.g. `archward adr "<title>"`) — ADR generator shipped with a generate → lint test; more elements co-developed per taxonomy
 - [ ] `@archward/kernel` — `AggregateRoot`, `Entity`, `ValueObject`, `DomainEvent`, …
 - [ ] `@archward/nestjs` — event publisher + error filter bridges
 - [ ] Beyond TypeScript — the same standard in other languages (own organization)

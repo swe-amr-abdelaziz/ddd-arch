@@ -13,6 +13,22 @@ export interface RunDeps {
   err: (line: string) => void;
 }
 
+type RegisterGenerator = (cli: CAC, deps: RunDeps) => void;
+
+const registerAdr: RegisterGenerator = (cli, deps) => {
+  cli
+    .command('adr <title>', 'Generate an Architecture Decision Record')
+    .option('--date <date>', 'ISO date for the ADR (default: today)')
+    .option('--status <status>', 'Initial status (default: Proposed)')
+    .option('--json', 'Print the result as JSON')
+    .action((title: string, options: AdrCommandOptions) => {
+      const generate = new GenerateAdr(new FsAdrStore(resolveAdrDir(deps.cwd)));
+      runAdrCommand({ type: 'adr', title, options, generate, out: deps.out });
+    });
+};
+
+const GENERATORS: readonly RegisterGenerator[] = [registerAdr];
+
 export function run(argv: string[], deps: RunDeps): number {
   const flags = argv.slice(2);
   if (flags.includes('-v') || flags.includes('--version')) {
@@ -20,7 +36,20 @@ export function run(argv: string[], deps: RunDeps): number {
     return 0;
   }
   try {
-    buildCli(deps).parse(argv);
+    const cli = buildCli(deps);
+    cli.parse(argv);
+    if (cli.options.help) {
+      return 0;
+    }
+    if (!cli.matchedCommand) {
+      const [command] = cli.args;
+      if (command === undefined) {
+        cli.outputHelp();
+        return 0;
+      }
+      deps.err(`archward: unknown command '${command}'`);
+      return 1;
+    }
     return 0;
   } catch (error) {
     if (!isUsageError(error)) {
@@ -33,18 +62,9 @@ export function run(argv: string[], deps: RunDeps): number {
 
 function buildCli(deps: RunDeps): CAC {
   const cli = cac('archward');
-  cli
-    .command(
-      'g <type> <title>',
-      'Generate an architecture artifact (type: adr)',
-    )
-    .option('--date <date>', 'ISO date for the ADR (default: today)')
-    .option('--status <status>', 'Initial status (default: Proposed)')
-    .option('--json', 'Print the result as JSON')
-    .action((type: string, title: string, options: AdrCommandOptions) => {
-      const generate = new GenerateAdr(new FsAdrStore(resolveAdrDir(deps.cwd)));
-      runAdrCommand({ type, title, options, generate, out: deps.out });
-    });
+  for (const register of GENERATORS) {
+    register(cli, deps);
+  }
   cli.help();
   cli.version(deps.version);
   return cli;

@@ -2,7 +2,7 @@ import { mkdtempSync, readdirSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 
 import { run } from '../src/presentation/cli';
 
@@ -20,11 +20,21 @@ const invoke = (args: string[], cwd: string, version = '1.2.3') => {
   return { out, err, code };
 };
 
-describe('archward g adr', () => {
+const captureHelp = (args: string[]) => {
+  const logs: string[] = [];
+  const spy = vi
+    .spyOn(console, 'log')
+    .mockImplementation((line: string) => logs.push(line));
+  const { code } = invoke(args, scratch());
+  spy.mockRestore();
+  return { help: logs.join('\n'), code };
+};
+
+describe('archward adr', () => {
   it('writes a numbered ADR under the resolved dir and reports it', () => {
     const cwd = scratch();
     const { out, code } = invoke(
-      ['g', 'adr', 'Record a decision', '--date', '2026-07-11'],
+      ['adr', 'Record a decision', '--date', '2026-07-11'],
       cwd,
     );
     const dir = join(cwd, 'docs', 'decisions');
@@ -37,15 +47,31 @@ describe('archward g adr', () => {
   });
 
   it('reports a clean error and exit code 1 when the title is missing', () => {
-    const { err, code } = invoke(['g', 'adr'], scratch());
+    const { err, code } = invoke(['adr'], scratch());
     expect(code).toBe(1);
     expect(err[0]).toContain('archward:');
   });
+});
 
-  it('reports exit code 1 for an unknown generator type', () => {
-    const { err, code } = invoke(['g', 'widget', 'anything'], scratch());
+describe('archward help', () => {
+  it('prints global help when invoked with no command', () => {
+    const { help, code } = captureHelp([]);
+    expect(code).toBe(0);
+    expect(help).toContain('Usage:');
+    expect(help).toContain('adr <title>');
+  });
+
+  it('prints a command-scoped help page for a generator', () => {
+    const { help, code } = captureHelp(['adr', '--help']);
+    expect(code).toBe(0);
+    expect(help).toContain('archward adr');
+    expect(help).toContain('--status');
+  });
+
+  it('reports exit code 1 for an unknown command', () => {
+    const { err, code } = invoke(['widget'], scratch());
     expect(code).toBe(1);
-    expect(err[0]).toContain('Unknown generator');
+    expect(err[0]).toContain("unknown command 'widget'");
   });
 });
 
