@@ -5,7 +5,12 @@
   "mode": "mild",
   "format": ["typescript"],
   "reporters": ["console"],
-  "ignore": ["**/dist/**", "**/node_modules/**", "**/test/**"],
+  "ignore": [
+    "**/dist/**",
+    "**/node_modules/**",
+    "**/test/**",
+    "**/tsup.config.ts"
+  ],
   "gitignore": true,
   "absolute": true
 }

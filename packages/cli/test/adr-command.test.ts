@@ -1,3 +1,4 @@
+import { resolveConfig } from '@archward/config';
 import { describe, expect, it } from 'vitest';
 
 import { GenerateAdr } from '../src/application/generate-adr';
@@ -28,6 +29,7 @@ const run = (type: string, title: string, options: AdrCommandOptions = {}) => {
     type,
     title,
     options,
+    config: resolveConfig().adr,
     generate: new GenerateAdr(store),
     out: (line) => out.push(line),
   });

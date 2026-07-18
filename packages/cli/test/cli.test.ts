@@ -8,10 +8,10 @@ import { run } from '../src/presentation/cli';
 
 const scratch = () => mkdtempSync(join(tmpdir(), 'archward-cli-'));
 
-const invoke = (args: string[], cwd: string, version = '1.2.3') => {
+const invoke = async (args: string[], cwd: string, version = '1.2.3') => {
   const out: string[] = [];
   const err: string[] = [];
-  const code = run(['node', 'archward', ...args], {
+  const code = await run(['node', 'archward', ...args], {
     cwd,
     version,
     out: (line) => out.push(line),
@@ -20,20 +20,20 @@ const invoke = (args: string[], cwd: string, version = '1.2.3') => {
   return { out, err, code };
 };
 
-const captureHelp = (args: string[]) => {
+const captureHelp = async (args: string[]) => {
   const logs: string[] = [];
   const spy = vi
     .spyOn(console, 'log')
     .mockImplementation((line: string) => logs.push(line));
-  const { code } = invoke(args, scratch());
+  const { code } = await invoke(args, scratch());
   spy.mockRestore();
   return { help: logs.join('\n'), code };
 };
 
 describe('archward adr', () => {
-  it('writes a numbered ADR under the resolved dir and reports it', () => {
+  it('writes a numbered ADR under the resolved dir and reports it', async () => {
     const cwd = scratch();
-    const { out, code } = invoke(
+    const { out, code } = await invoke(
       ['adr', 'Record a decision', '--date', '2026-07-11'],
       cwd,
     );
@@ -46,38 +46,38 @@ describe('archward adr', () => {
     ).toContain('# 1. Record a decision');
   });
 
-  it('reports a clean error and exit code 1 when the title is missing', () => {
-    const { err, code } = invoke(['adr'], scratch());
+  it('reports a clean error and exit code 1 when the title is missing', async () => {
+    const { err, code } = await invoke(['adr'], scratch());
     expect(code).toBe(1);
     expect(err[0]).toContain('archward:');
   });
 });
 
 describe('archward help', () => {
-  it('prints global help when invoked with no command', () => {
-    const { help, code } = captureHelp([]);
+  it('prints global help when invoked with no command', async () => {
+    const { help, code } = await captureHelp([]);
     expect(code).toBe(0);
     expect(help).toContain('Usage:');
     expect(help).toContain('adr <title>');
   });
 
-  it('prints a command-scoped help page for a generator', () => {
-    const { help, code } = captureHelp(['adr', '--help']);
+  it('prints a command-scoped help page for a generator', async () => {
+    const { help, code } = await captureHelp(['adr', '--help']);
     expect(code).toBe(0);
     expect(help).toContain('archward adr');
     expect(help).toContain('--status');
   });
 
-  it('reports exit code 1 for an unknown command', () => {
-    const { err, code } = invoke(['widget'], scratch());
+  it('reports exit code 1 for an unknown command', async () => {
+    const { err, code } = await invoke(['widget'], scratch());
     expect(code).toBe(1);
     expect(err[0]).toContain("unknown command 'widget'");
   });
 
   it.each([['--bogus'], ['-x']])(
     'errors instead of printing help for the unknown flag %s',
-    (flag) => {
-      const { err, code } = invoke([flag], scratch());
+    async (flag) => {
+      const { err, code } = await invoke([flag], scratch());
       expect(code).toBe(1);
       expect(err[0]).toContain(`unknown option '${flag}'`);
     },
@@ -85,12 +85,12 @@ describe('archward help', () => {
 
   it.each([['-help'], ['-hello'], ['-ver'], ['-vr'], ['-vv']])(
     'does not treat the near-miss flag %s as -h/--help or -v/--version',
-    (flag) => {
+    async (flag) => {
       const logs: string[] = [];
       const spy = vi
         .spyOn(console, 'log')
         .mockImplementation((line: string) => logs.push(line));
-      const { out, err, code } = invoke([flag], scratch());
+      const { out, err, code } = await invoke([flag], scratch());
       spy.mockRestore();
       expect(code).toBe(1);
       expect(err[0]).toContain(`unknown option '${flag}'`);
@@ -100,9 +100,12 @@ describe('archward help', () => {
 });
 
 describe('archward --version', () => {
-  it.each([['--version'], ['-v']])('prints the bare version for %s', (flag) => {
-    const { out, code } = invoke([flag], scratch(), '1.2.3');
-    expect(code).toBe(0);
-    expect(out).toEqual(['1.2.3']);
-  });
+  it.each([['--version'], ['-v']])(
+    'prints the bare version for %s',
+    async (flag) => {
+      const { out, code } = await invoke([flag], scratch(), '1.2.3');
+      expect(code).toBe(0);
+      expect(out).toEqual(['1.2.3']);
+    },
+  );
 });

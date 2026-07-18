@@ -23,7 +23,7 @@ const neverInlineDisable = [
 ];
 
 export default [
-  ...ddd.configs.adr,
+  ...(await ddd.configs.adr),
   ...defineConfig([
     { ignores: ['**/dist/**'] },
     {

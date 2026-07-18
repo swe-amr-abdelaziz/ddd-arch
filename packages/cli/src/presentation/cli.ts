@@ -1,8 +1,10 @@
+import { join } from 'node:path';
+
+import { loadConfig, type ResolvedAdrConfig } from '@archward/config';
 import { type CAC, cac } from 'cac';
 
 import { GenerateAdr } from '../application/generate-adr';
 import { InvalidInput } from '../domain/errors';
-import { resolveAdrDir } from '../infrastructure/adr-dir';
 import { FsAdrStore } from '../infrastructure/fs-adr-store';
 import { type AdrCommandOptions, runAdrCommand } from './adr-command';
 
@@ -13,29 +15,46 @@ export interface RunDeps {
   err: (line: string) => void;
 }
 
-type RegisterGenerator = (cli: CAC, deps: RunDeps) => void;
+type RegisterGenerator = (
+  cli: CAC,
+  deps: RunDeps,
+  config: ResolvedAdrConfig,
+) => void;
 
-const registerAdr: RegisterGenerator = (cli, deps) => {
+const registerAdr: RegisterGenerator = (cli, deps, config) => {
   cli
     .command('adr <title>', 'Generate an Architecture Decision Record')
     .option('--date <date>', 'ISO date for the ADR (default: today)')
-    .option('--status <status>', 'Initial status (default: Proposed)')
+    .option('--status <status>', 'Initial status (default: first configured)')
+    .option(
+      '--sections <list>',
+      'Comma-separated sections (default: configured)',
+    )
     .option('--json', 'Print the result as JSON')
     .action((title: string, options: AdrCommandOptions) => {
-      const generate = new GenerateAdr(new FsAdrStore(resolveAdrDir(deps.cwd)));
-      runAdrCommand({ type: 'adr', title, options, generate, out: deps.out });
+      const store = new FsAdrStore(join(deps.cwd, config.dir));
+      const generate = new GenerateAdr(store);
+      runAdrCommand({
+        type: 'adr',
+        title,
+        options,
+        config,
+        generate,
+        out: deps.out,
+      });
     });
 };
 
 const GENERATORS: readonly RegisterGenerator[] = [registerAdr];
 
-export function run(argv: string[], deps: RunDeps): number {
+export async function run(argv: string[], deps: RunDeps): Promise<number> {
   const flags = argv.slice(2);
   if (flags.includes('-v') || flags.includes('--version')) {
     deps.out(deps.version);
     return 0;
   }
-  const cli = buildCli(deps);
+  const config = (await loadConfig(deps.cwd)).adr;
+  const cli = buildCli(deps, config);
   const commands = new Set(cli.commands.map((command) => command.name));
   if (!flags.some((token) => commands.has(token))) {
     return runGlobal(flags, cli, deps);
@@ -81,10 +100,10 @@ function unknownInput(flags: string[]): string {
   return `unknown option '${flag}'`;
 }
 
-function buildCli(deps: RunDeps): CAC {
+function buildCli(deps: RunDeps, config: ResolvedAdrConfig): CAC {
   const cli = cac('archward');
   for (const register of GENERATORS) {
-    register(cli, deps);
+    register(cli, deps, config);
   }
   cli.help();
   cli.version(deps.version);

@@ -27,6 +27,7 @@
     "prepublishOnly": "pnpm build"
   },
   "dependencies": {
+    "@archward/config": "workspace:*",
     "cac": "^6.7.14"
   },
   "devDependencies": {
