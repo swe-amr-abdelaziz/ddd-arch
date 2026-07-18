@@ -1,6 +1,6 @@
 {
   "name": "@archward/eslint-plugin",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "description": "Deterministic DDD + clean architecture ESLint rules for TypeScript backends.",
   "keywords": [
     "eslint",
