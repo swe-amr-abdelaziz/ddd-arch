@@ -1,5 +1,11 @@
 # @archward/cli
 
+## 0.2.0
+
+### Minor Changes
+
+- dd21d54: Add `--version` / `-v` to the `archward` CLI, printing the installed `@archward/cli` version.
+
 ## 0.1.0
 
 ### Minor Changes

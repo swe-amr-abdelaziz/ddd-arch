@@ -1,6 +1,6 @@
 {
   "name": "@archward/cli",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Scaffolds architecture-conformant files that pass the archward ESLint rules.",
   "type": "module",
   "license": "MIT",
